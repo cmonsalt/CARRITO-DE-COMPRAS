@@ -4,7 +4,7 @@ document.addEventListener(`DOMContentLoaded`, () => {
 const fetchData = async () => {
   try {
     const res = await fetch(`api.json`);
-    let data = await res.json();
+    const data = await res.json();
     pintarProductos(data);
     // console.log(data);
   } catch (error) {
@@ -19,6 +19,8 @@ const pintarProductos = (data) => {
   const fragment = document.createDocumentFragment();
   data.forEach((producto) => {
     template.querySelector(`img`).setAttribute(`src`, producto.image);
+    template.querySelector(`h5`).textContent = producto.name;
+    template.querySelector(`span`).textContent = producto.unit_price;
 
     const clone = template.cloneNode(true);
     fragment.appendChild(clone);
