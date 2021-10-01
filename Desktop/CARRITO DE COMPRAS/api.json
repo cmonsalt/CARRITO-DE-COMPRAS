@@ -1,24 +1,26 @@
-{ 
-    "products" :  [ 
-        { 
-            "name" :  "redbull" , 
-            "unit_price" :  5000 , 
-            "stock" :  5 
-        } , 
-        { 
-            "name" :  "rice" , 
-            "unit_price" :  2000 , 
-            "stock" :  0 
-        } , 
-        { 
-            "name" :  "papitas de limón margarita" , 
-            "unit_price" :  1500 , 
-            "stock" :  1 
-        } ,
-        { 
-            "name" :  "carne / libra" ,
-            "unit_price" :  500 , 
-            "stock" :  8 
-        } 
-    ] 
-}
+[
+  {
+    "name": "redbull",
+    "unit_price": 5000,
+    "stock": 5,
+    "image": "https://media.istockphoto.com/photos/red-bull-picture-id520175618?k=20&m=520175618&s=612x612&w=0&h=daY9kOjCs95rahpWP2C22M2BaTRL2aWgb0Q0C0dsPCA="
+  },
+  {
+    "name": "rice",
+    "unit_price": 2000,
+    "stock": 0,
+    "image": "https://thumbs.dreamstime.com/b/porci%C3%B3n-del-pilaf-del-arroz-en-la-peque%C3%B1a-placa-19717788.jpg"
+  },
+  {
+    "name": "papitas de limón margarita",
+    "unit_price": 1500,
+    "stock": 1,
+    "image": "https://lamayorista.com/wp-content/uploads/2020/01/PAPASMARGARITALIMON-1-350x263.jpg"
+  },
+  {
+    "name": "carne / libra",
+    "unit_price": 500,
+    "stock": 8,
+    "image": "https://i.ziyadmedical.com/images/005/image-1208.jpg"
+  }
+]
