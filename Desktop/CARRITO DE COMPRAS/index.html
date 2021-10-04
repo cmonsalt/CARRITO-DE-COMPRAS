@@ -11,25 +11,92 @@
 </head>
 
 <body>
+  <header>
+    <nav class="navbar navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+          <img
+            src="https://media-exp1.licdn.com/dms/image/C560BAQGCdnMOyFlTlw/company-logo_200_200/0/1571159813484?e=2159024400&v=beta&t=AWh1LNfBhnw3f4aO4MM6qh2abk434AxkY_o-021gYsc"
+            alt="" width="30" height="24" class="d-inline-block align-text-top">
+          Alternova shop
+        </a>
+      </div>
+    </nav>
+  </header>
+
+  <br>
+
   <div class="container">
-    <h1 class="text-center">Alternova shop</h1>
-    <hr>
-    <div class="row" id="contenedor-productos"></div>
+    <div class="row" id="contenedor-productos">
+
+    </div>
+    <div class="contenedor carrito">
+      <h3>Carrito de compras</h3>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Producto</th>
+            <th scope="col">Cantidad</th>
+            <th scope="col">Acción</th>
+            <th scope="col">Total</th>
+          </tr>
+        </thead>
+        <tbody id="nombreProductos"> </tbody>
+        <tfoot>
+          <tr id="footer">
+            <th scope="row" colspan="5">Carrito vacío</th>
+          </tr>
+        </tfoot>
+      </table>
+
+    </div>
+
   </div>
 
+
   <template id="template-productos">
-    <div class="col-12 col-md-4">
+    <div class="col-12 col-md-4 mb-3">
       <div class="card">
         <img src="" class="card-img-top" alt="...">
         <div class="card-body">
           <h5 class="card-title">Nombre Producto</h5>
           <p class="card-text">$<span>Precio</span>
           </p>
-          <a href="#" class="btn btn-dark">Comprar</a>
+          <button class="btn btn-dark">Comprar</button>
         </div>
       </div>
     </div>
   </template>
+
+  <template id="template-carrito">
+    <tr>
+      <th scope="row">Nombre del Producto</th>
+      <td>Cantidad del producto</td>
+      <td>
+        <button class="btn btn-info btn-sm">
+          +
+        </button>
+        <button class="btn btn-danger btn-sm">
+          -
+        </button>
+      </td>
+      <td>$ <span>Precio total X producto</span></td>
+    </tr>
+  </template>
+
+
+  <template id="template-footer">
+    <th scope="row" colspan="2">Total productos</th>
+    <td>Cantidad total de productos</td>
+    <td>
+      <button class="btn btn-danger btn-sm" id="vaciar-carrito">
+        <p>Vaciar carrito</p>
+      </button>
+    </td>
+    <td class="font-weight-bold">$ <span>Precio Total</span></td>
+  </template>
+
+
 
 
 
