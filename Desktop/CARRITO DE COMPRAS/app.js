@@ -39,15 +39,21 @@ const detectarBotones = (data) => {
         (item) => item.id === parseInt(btn.dataset.id)
       );
       producto.cantidad = 1;
-
-      if (producto.stock != 0) {
-        carrito[producto.id] = { ...producto };
+      if (producto.stock === 0) {
+        swal(
+          "Oops!",
+          "No contamos con mas Unidades de este producto!",
+          "error"
+        );
       }
 
-      // if (carrito.hasOwnProperty(producto.id)) {
-      //   producto.cantidad = carrito[producto.id].cantidad + 1;
-      //   producto.stock = carrito[producto.id].stock - 1;
-      // }
+      if (producto.stock > 0) {
+        if (carrito.hasOwnProperty(producto.id)) {
+          producto.cantidad = carrito[producto.id].cantidad + 1;
+        }
+        carrito[producto.id] = { ...producto };
+        producto.stock = carrito[producto.id].stock - 1;
+      }
 
       console.log(carrito);
       pintarCarrito();
@@ -64,7 +70,8 @@ const pintarCarrito = () => {
   Object.values(carrito).forEach((producto) => {
     template.querySelector(`th`).textContent = producto.name;
     template.querySelectorAll(`td`)[0].textContent = producto.cantidad;
-    template.querySelector(`span`).textContent = producto.unit_price;
+    template.querySelector(`span`).textContent =
+      producto.unit_price * producto.cantidad;
 
     const clone = template.cloneNode(true);
     fragment.appendChild(clone);
