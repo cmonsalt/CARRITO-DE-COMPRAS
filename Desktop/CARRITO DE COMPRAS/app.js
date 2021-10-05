@@ -36,7 +36,7 @@ const detectarBotones = (data) => {
   botones.forEach((btn) => {
     btn.addEventListener(`click`, () => {
       const producto = data.find(
-        (item) => item.id === parseInt(btn.dataset.id)
+        (item) => item.id === parseInt(btn.dataset.id) //Buscamos en la data el objeto que contiene el boton que se preciono y se agrega a la variable producto
       );
       producto.cantidad = 1;
       if (producto.stock === 0) {
@@ -47,6 +47,7 @@ const detectarBotones = (data) => {
         );
       }
 
+      //Se agregan los productos al carrito si tienen stock suficiente
       if (producto.stock > 0) {
         if (carrito.hasOwnProperty(producto.id)) {
           producto.cantidad = carrito[producto.id].cantidad + 1;
@@ -54,14 +55,13 @@ const detectarBotones = (data) => {
         carrito[producto.id] = { ...producto };
         producto.stock = carrito[producto.id].stock - 1;
       }
-
-      console.log(carrito);
+      //console.log(carrito);
       pintarCarrito();
     });
   });
 };
 
-//Pintar carrito
+//Pinta el carrito
 const nombreProductos = document.querySelector(`#nombreProductos`);
 const pintarCarrito = () => {
   nombreProductos.innerHTML = ``;
