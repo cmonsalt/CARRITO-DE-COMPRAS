@@ -1,5 +1,9 @@
 document.addEventListener(`DOMContentLoaded`, () => {
   fetchData(); // Espera que se cargue todo el doc HTLM y ejecuta la funcion fetchData
+  // if (localStorage.getItem(`carrito`)) {
+  //   carrito = JSON.parse(localStorage.getItem(`carrito`));
+  //   pintarCarrito();
+  // }
 });
 const fetchData = async () => {
   try {
@@ -7,7 +11,6 @@ const fetchData = async () => {
     const data = await res.json();
     pintarProductos(data);
     detectarBotones(data);
-    // console.log(data);
   } catch (error) {
     console.log(error);
   }
@@ -39,23 +42,17 @@ const detectarBotones = (data) => {
       const producto = data.find(
         (item) => item.id === parseInt(btn.dataset.id) //Buscamos en la data el objeto que contiene el boton que se preciono y se agrega a la variable producto
       );
-
       //Se agregan los productos al carrito si tienen stock suficiente
       producto.cantidad = 1;
-      if (producto.stock === 0) {
+      if (producto.stock <= 0) {
         swal(
           "Oops!",
           "No contamos con mas unidades de este producto!",
           "error"
         );
       }
-
       if (producto.stock > 0) {
-        if (carrito.hasOwnProperty(producto.id)) {
-          producto.cantidad = carrito[producto.id].cantidad + 1;
-        }
         carrito[producto.id] = { ...producto };
-        producto.stock = carrito[producto.id].stock - 1;
         pintarCarrito();
       }
     });
@@ -74,12 +71,18 @@ const pintarCarrito = () => {
     template.querySelector(`span`).textContent =
       producto.unit_price * producto.cantidad;
 
+    //Botenes de incremento y decremento
+    template.querySelector(`.btn-info`).dataset.id = producto.id;
+    template.querySelector(`.btn-primary`).dataset.id = producto.id;
     const clone = template.cloneNode(true);
     fragment.appendChild(clone);
   });
   nombreProductos.appendChild(fragment);
 
   pintarFooterCar();
+  accionBotones();
+  console.log(carrito);
+  // localStorage.setItem(`carrito`, JSON.stringify(carrito));
 };
 
 //Pintar el footer del carrito
@@ -97,11 +100,47 @@ const pintarFooterCar = () => {
     (acc, { cantidad, unit_price }) => acc + cantidad * unit_price,
     0
   ); //Calcula el precio Total de todos los productos presentes en el carrito
-
+  //Pinta el footer del carrito
   template.querySelectorAll(`td`)[0].textContent = cantidadTotal;
   template.querySelector(`span`).textContent = precioTotal;
-
   const clone = template.cloneNode(true);
   fragment.appendChild(clone);
   footerCar.appendChild(fragment);
+
+  const boton = document.querySelector(`#vaciar-carrito`);
+  boton.addEventListener(`click`, () => {
+    carrito = {};
+    pintarCarrito();
+  });
+
+  if (Object.keys(carrito).length === 0) {
+    footerCar.innerHTML = `<th scope="row" colspan="4">Carrito vacío</th>`;
+    return;
+  }
+};
+
+const accionBotones = () => {
+  botonAumentar = document.querySelectorAll(`#nombreProductos .btn-info`);
+  botonDisminuir = document.querySelectorAll(`#nombreProductos .btn-primary`);
+  botonAumentar.forEach((btn) => {
+    btn.addEventListener(`click`, () => {
+      const producto = carrito[btn.dataset.id];
+      producto.stock = carrito[producto.id].stock - 1;
+      if (producto.stock <= 0) {
+        swal(
+          "Oops!",
+          "No contamos con mas unidades de este producto!",
+          "error"
+        );
+      }
+      if (producto.stock > 0) {
+        producto.cantidad = carrito[producto.id].cantidad + 1;
+        carrito[btn.dataset.id] = { ...producto };
+      }
+      pintarCarrito();
+    });
+  });
+  botonDisminuir.forEach((btn) => {
+    btn.addEventListener(`click`, () => {});
+  });
 };
