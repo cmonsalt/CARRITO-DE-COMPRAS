@@ -43,15 +43,14 @@ const detectarBotones = (data) => {
         (item) => item.id === parseInt(btn.dataset.id) //Buscamos en la data el objeto que contiene el boton que se preciono y se agrega a la variable producto
       );
       //Se agregan los productos al carrito si tienen stock suficiente
-      producto.cantidad = 1;
-      if (producto.stock <= 0) {
+      producto.cantidad = 0;
+      if (producto.stock === 0) {
         swal(
           "Oops!",
           "No contamos con mas unidades de este producto!",
           "error"
         );
-      }
-      if (producto.stock > 0) {
+      } else {
         carrito[producto.id] = { ...producto };
         pintarCarrito();
       }
@@ -79,9 +78,10 @@ const pintarCarrito = () => {
   });
   nombreProductos.appendChild(fragment);
 
+  console.log(JSON.stringify(carrito));
+
   pintarFooterCar();
   accionBotones();
-  console.log(carrito);
   // localStorage.setItem(`carrito`, JSON.stringify(carrito));
 };
 
@@ -125,22 +125,34 @@ const accionBotones = () => {
   botonAumentar.forEach((btn) => {
     btn.addEventListener(`click`, () => {
       const producto = carrito[btn.dataset.id];
-      producto.stock = carrito[producto.id].stock - 1;
-      if (producto.stock <= 0) {
+      if (producto.stock === 0) {
         swal(
           "Oops!",
           "No contamos con mas unidades de este producto!",
           "error"
         );
-      }
-      if (producto.stock > 0) {
+        return;
+      } else {
         producto.cantidad = carrito[producto.id].cantidad + 1;
+        producto.stock = carrito[producto.id].stock - 1;
         carrito[btn.dataset.id] = { ...producto };
       }
+
       pintarCarrito();
     });
   });
   botonDisminuir.forEach((btn) => {
-    btn.addEventListener(`click`, () => {});
+    btn.addEventListener(`click`, () => {
+      const producto = carrito[btn.dataset.id];
+      if (producto.cantidad === 0) {
+        delete carrito[btn.dataset.id];
+      } else {
+        producto.cantidad = carrito[producto.id].cantidad - 1;
+        producto.stock = carrito[producto.id].stock + 1;
+        carrito[btn.dataset.id] = { ...producto };
+      }
+
+      pintarCarrito();
+    });
   });
 };
