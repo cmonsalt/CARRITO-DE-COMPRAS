@@ -69,7 +69,6 @@ const pintarCarrito = () => {
     template.querySelectorAll(`td`)[0].textContent = producto.cantidad;
     template.querySelector(`span`).textContent =
       producto.unit_price * producto.cantidad;
-
     //Botenes de incremento y decremento
     template.querySelector(`.btn-info`).dataset.id = producto.id;
     template.querySelector(`.btn-primary`).dataset.id = producto.id;
@@ -77,8 +76,6 @@ const pintarCarrito = () => {
     fragment.appendChild(clone);
   });
   nombreProductos.appendChild(fragment);
-
-  console.log(JSON.stringify(carrito));
 
   pintarFooterCar();
   accionBotones();
@@ -106,7 +103,7 @@ const pintarFooterCar = () => {
   const clone = template.cloneNode(true);
   fragment.appendChild(clone);
   footerCar.appendChild(fragment);
-
+  //Vaciar el carrito
   const boton = document.querySelector(`#vaciar-carrito`);
   boton.addEventListener(`click`, () => {
     carrito = {};
@@ -117,8 +114,10 @@ const pintarFooterCar = () => {
     footerCar.innerHTML = `<th scope="row" colspan="4">Carrito vacío</th>`;
     return;
   }
+  botonOrden();
 };
 
+//Botones aumentar y disminuir
 const accionBotones = () => {
   botonAumentar = document.querySelectorAll(`#nombreProductos .btn-info`);
   botonDisminuir = document.querySelectorAll(`#nombreProductos .btn-primary`);
@@ -154,5 +153,30 @@ const accionBotones = () => {
 
       pintarCarrito();
     });
+  });
+};
+
+//Crear Orden
+const botonOrden = () => {
+  boton = document.querySelector(`#crear-orden`);
+  boton.addEventListener(`click`, () => {
+    const orden = {
+      lista: [],
+      precioTotalOrden: [],
+    };
+    const precioTotal = Object.values(carrito).reduce(
+      (acc, { cantidad, unit_price }) => acc + cantidad * unit_price,
+      0
+    );
+    Object.values(carrito).forEach((producto) => {
+      orden.lista.push({
+        name: producto.name,
+        cantidad: producto.cantidad,
+        precioTotal: producto.unit_price * producto.cantidad,
+      });
+    });
+    orden.precioTotalOrden.push(precioTotal);
+    console.log(JSON.stringify(orden));
+    return;
   });
 };
