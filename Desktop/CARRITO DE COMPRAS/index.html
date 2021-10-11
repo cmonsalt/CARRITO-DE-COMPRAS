@@ -8,50 +8,49 @@
   <title>Carrito de compras</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
   <header>
-    <nav class="navbar navbar-light bg-light">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#">
-          <img
-            src="https://media-exp1.licdn.com/dms/image/C560BAQGCdnMOyFlTlw/company-logo_200_200/0/1571159813484?e=2159024400&v=beta&t=AWh1LNfBhnw3f4aO4MM6qh2abk434AxkY_o-021gYsc"
-            alt="" width="30" height="24" class="d-inline-block align-text-top">
-          Alternova shop
-        </a>
+    <nav>
+      <div class="logo">
+        <img
+          src="https://media-exp1.licdn.com/dms/image/C560BAQGCdnMOyFlTlw/company-logo_200_200/0/1571159813484?e=2159024400&v=beta&t=AWh1LNfBhnw3f4aO4MM6qh2abk434AxkY_o-021gYsc"
+          alt="Logo">
+        <h2>Alternova Shop</h2>
       </div>
     </nav>
   </header>
 
   <br>
 
-  <div class="container">
-    <div class="row" id="contenedor-productos">
+  <main>
+    <div class="container">
+      <div class="row">
+        <h3>Carrito de compras</h3>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">Producto</th>
+              <th scope="col">Cantidad</th>
+              <th scope="col">Accionar</th>
+              <th scope="col">Total</th>
+            </tr>
+          </thead>
+          <tbody id="nombreProductos"> </tbody>
+          <tfoot>
+            <tr id="footer-car">
+              <th scope="row" colspan="4">Carrito vacío</th>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+      <div class="row" id="contenedor-productos">
 
+      </div>
     </div>
-    <div class="row">
-      <h3>Carrito de compras</h3>
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th scope="col">Producto</th>
-            <th scope="col">Cantidad</th>
-            <th scope="col">Accionar</th>
-            <th scope="col">Total</th>
-          </tr>
-        </thead>
-        <tbody id="nombreProductos"> </tbody>
-        <tfoot>
-          <tr id="footer-car">
-            <th scope="row" colspan="4">Carrito vacío</th>
-          </tr>
-        </tfoot>
-      </table>
-
-    </div>
-
-  </div>
+  </main>
 
 
   <template id="template-productos">
