@@ -1,9 +1,9 @@
 document.addEventListener(`DOMContentLoaded`, () => {
   fetchData(); // Espera que se cargue todo el doc HTLM y ejecuta la funcion fetchData
-  // if (localStorage.getItem(`carrito`)) {
-  //   carrito = JSON.parse(localStorage.getItem(`carrito`));
-  //   pintarCarrito();
-  // }
+  if (localStorage.getItem(`carrito`)) {
+    carrito = JSON.parse(localStorage.getItem(`carrito`));
+    pintarCarrito();
+  }
 });
 const fetchData = async () => {
   try {
@@ -79,7 +79,7 @@ const pintarCarrito = () => {
 
   pintarFooterCar();
   accionBotones();
-  // localStorage.setItem(`carrito`, JSON.stringify(carrito));
+  localStorage.setItem(`carrito`, JSON.stringify(carrito));
 };
 
 //Pintar el footer del carrito
@@ -158,16 +158,13 @@ const accionBotones = () => {
 
 //Crear Orden
 const botonOrden = () => {
-  boton = document.querySelector(`#crear-orden`);
+  const boton = document.querySelector(`#crear-orden`);
   boton.addEventListener(`click`, () => {
     const orden = {
       lista: [],
       precioTotalOrden: [],
     };
-    const precioTotal = Object.values(carrito).reduce(
-      (acc, { cantidad, unit_price }) => acc + cantidad * unit_price,
-      0
-    );
+
     Object.values(carrito).forEach((producto) => {
       orden.lista.push({
         name: producto.name,
@@ -175,8 +172,12 @@ const botonOrden = () => {
         precioTotal: producto.unit_price * producto.cantidad,
       });
     });
+
+    const precioTotal = Object.values(carrito).reduce(
+      (acc, { cantidad, unit_price }) => acc + cantidad * unit_price,
+      0
+    );
     orden.precioTotalOrden.push(precioTotal);
     console.log(JSON.stringify(orden));
-    return;
   });
 };
